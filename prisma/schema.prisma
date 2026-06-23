@@ -10,15 +10,15 @@ datasource db {
 }
 
 model Preorder {
-  id            String   @id @default(cuid())
-  name          String
-  productCount  Int      @default(1)
-  preorderWhen  String   // "out-of-stock" or "regardless-of-stock"
-  startsAt      DateTime
-  endsAt        DateTime?
-  status        String   // "Active" or "Inactive"
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id          String   @id @default(cuid())
+  title       String
+  sku         String
+  customer    String
+  quantity    Int
+  price       Decimal
+  description String?
+  active      Boolean  @default(true)
 
-  @@map("preorders")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
