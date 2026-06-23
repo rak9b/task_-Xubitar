@@ -58,7 +58,7 @@ export default function PreorderForm({ initialData }: { initialData?: any }) {
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
       <div className="flex items-center mb-6">
         <button 
-          onClick={() => router.back()}
+          onClick={() => router.push('/')}
           className="text-sm text-neutral-500 hover:text-neutral-800 transition-colors"
         >
           ← Back
@@ -143,7 +143,7 @@ export default function PreorderForm({ initialData }: { initialData?: any }) {
         <div className="flex items-center justify-end space-x-4 pt-4 border-t border-neutral-100">
           <button
             type="button"
-            onClick={() => router.back()}
+            onClick={() => router.push('/')}
             className="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900 bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-colors"
           >
             Cancel

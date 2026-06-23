@@ -20,6 +20,25 @@ const formatDate = (date: Date | null) => {
 export default function PreorderTable({ preorders }: { preorders: Preorder[] }) {
   const [isPending, startTransition] = useTransition();
   const [actionId, setActionId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setSelectedIds(new Set(preorders.map((p) => p.id)));
+    } else {
+      setSelectedIds(new Set());
+    }
+  };
+
+  const handleSelectOne = (id: string) => {
+    const newSelected = new Set(selectedIds);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedIds(newSelected);
+  };
 
   const handleToggleStatus = (id: string, currentStatus: string) => {
     setActionId(`toggle-${id}`);
@@ -47,7 +66,12 @@ export default function PreorderTable({ preorders }: { preorders: Preorder[] }) 
             <tr>
               <th scope="col" className="p-4 w-4">
                 <div className="flex items-center">
-                  <input type="checkbox" className="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-neutral-900" />
+                  <input 
+                    type="checkbox" 
+                    checked={preorders.length > 0 && selectedIds.size === preorders.length}
+                    onChange={handleSelectAll}
+                    className="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-neutral-900" 
+                  />
                 </div>
               </th>
               <th scope="col" className="px-6 py-4 font-semibold text-neutral-700">Name</th>
@@ -69,7 +93,12 @@ export default function PreorderTable({ preorders }: { preorders: Preorder[] }) 
                 <tr key={preorder.id} className={`${isDeleting ? 'opacity-50' : ''} hover:bg-neutral-50/50 transition-colors`}>
                   <td className="p-4 w-4">
                     <div className="flex items-center">
-                      <input type="checkbox" className="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-neutral-900" />
+                      <input 
+                        type="checkbox" 
+                        checked={selectedIds.has(preorder.id)}
+                        onChange={() => handleSelectOne(preorder.id)}
+                        className="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-neutral-900" 
+                      />
                     </div>
                   </td>
                   <td className="px-6 py-4 font-semibold text-neutral-900">{preorder.name}</td>
