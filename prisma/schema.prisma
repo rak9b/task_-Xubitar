@@ -1,0 +1,24 @@
+// Preorder Manager - Prisma Schema
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Preorder {
+  id            String   @id @default(cuid())
+  name          String
+  productCount  Int      @default(1)
+  preorderWhen  String   // "out-of-stock" or "regardless-of-stock"
+  startsAt      DateTime
+  endsAt        DateTime?
+  status        String   // "Active" or "Inactive"
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("preorders")
+}
